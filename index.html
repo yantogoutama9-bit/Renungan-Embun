@@ -408,61 +408,163 @@
                 <i class="far fa-calendar-alt"></i>
                 <span id="current-date"></span>
             </div>
-            <h2>Selamat Pagi, Saudara/i</h2>
+            <h2>Selamat Pagi, Saudara/i</h2>	
             <p>Renungan baru setiap hari. Firman Tuhan yang menyegarkan jiwa.</p>
         </div>
     </section>
 
     <main class="container">
-        <!-- Navigasi Tanggal -->
-        <div class="navigation-date">
-            <button class="nav-btn" onclick="changeDate(-1)" title="Hari Sebelumnya">
-                <i class="fas fa-chevron-left"></i>
-            </button>
-            <div class="current-date-display" id="devotion-date">
-                Memuat...
-            </div>
-            <button class="nav-btn" onclick="changeDate(1)" title="Hari Berikutnya">
-                <i class="fas fa-chevron-right"></i>
-            </button>
-        </div>
-
-        <!-- Ayat Hari Ini -->
-        <div class="verse-card">
-            <div class="verse-header">
-                <i class="fas fa-book-open"></i>
-                <span>Ayat Hari Ini</span>
-            </div>
-            <div class="verse-text" id="daily-verse">
-                Memuat ayat...
-            </div>
-            <div class="verse-reference" id="verse-reference">
-                -
-            </div>
-        </div>
-
-        <!-- Renungan -->
-        <div class="devotion-section" id="renungan">
-            <h2 class="section-title">
-                <i class="fas fa-dove"></i>
-                <span id="devotion-title">Renungan Pagi</span>
-            </h2>
-            
-            <div class="devotion-content" id="devotion-text">
-                Memuat renungan...
+        <!-- Renungan Hari Ini Section -->
+        <section id="renungan-hari-ini">
+            <!-- Navigasi Tanggal -->
+            <div class="navigation-date">
+                <button class="nav-btn" onclick="changeDate(-1)" title="Hari Sebelumnya">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <div class="current-date-display" id="devotion-date">
+                    Memuat...
+                </div>
+                <button class="nav-btn" onclick="changeDate(1)" title="Hari Berikutnya">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
             </div>
 
-            <!-- Doa -->
-            <div class="prayer-section">
-                <h3 class="prayer-title">
-                    <i class="fas fa-praying-hands"></i>
-                    Doa Pagi
-                </h3>
-                <div class="prayer-text" id="prayer-text">
-                    Memuat doa...
+            <!-- Ayat Hari Ini -->
+            <div class="verse-card">
+                <div class="verse-header">
+                    <i class="fas fa-book-open"></i>
+                    <span>Ayat Hari Ini</span>
+                </div>
+                <div class="verse-text" id="daily-verse">
+                    Memuat ayat...
+                </div>
+                <div class="verse-reference" id="verse-reference">
+                    -
                 </div>
             </div>
-        </div>
+
+            <!-- Renungan -->
+            <div class="devotion-section">
+                <h2 class="section-title">
+                    <i class="fas fa-dove"></i>
+                    <span id="devotion-title">Renungan Pagi</span>
+                </h2>
+                
+                <div class="devotion-content" id="devotion-text">
+                    Memuat renungan...
+                </div>
+
+                <!-- Doa -->
+                <div class="prayer-section">
+                    <h3 class="prayer-title">
+                        <i class="fas fa-praying-hands"></i>
+                        Doa Pagi
+                    </h3>
+                    <div class="prayer-text" id="prayer-text">
+                        Memuat doa...
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Renungan Daniel Section -->
+        <section class="renungan-daniel" id="renungan">
+            <h2><i class="fas fa-book-reader"></i> Daniel: Teguh dalam Iman di Tengah Tekanan</h2>
+            
+            <img src="https://kimi-web-img.moonshot.cn/img/media.bible.art/725caf2635f6be2399e2345e5db67ed66abab7af.jpg" alt="Daniel Berdoa Menghadap Yerusalem" class="renungan-image">
+            
+            <h3>1. Arti Nama Daniel</h3>
+            <p><strong>Daniel (דָּנִיֵּאל):</strong> "Allah adalah Hakimku" atau "Allah Adalah Pembelaku."</p>
+            <p>Nama ini mencerminkan <strong>keyakinan Daniel bahwa Allah berdaulat atas hidupnya</strong>, bahkan di tengah penguasa asing.</p>
+
+            <h3>2. Keadaan Hidup Daniel Sebelum Guncangan (Daniel 6)</h3>
+            
+            <h4>A. Latar Belakang</h4>
+            <ul>
+                <li><strong>Asal:</strong> Daniel adalah seorang <strong>Yahudi bangsawan</strong> yang dibawa ke pembuangan di Babel oleh Nebukadnezar (Daniel 1:1-6).</li>
+                <li><strong>Pendidikan:</strong> Dipilih untuk dididik di istana Babel, tetapi <strong>menolak makanan raja</strong> yang najis (Daniel 1:8-16).</li>
+                <li><strong>Karakter:</strong> Cerdas, berpengetahuan, dan <strong>setia kepada Allah</strong> (Daniel 1:17-20).</li>
+            </ul>
+
+            <h4>B. Posisi di Kerajaan</h4>
+            <ul>
+                <li><strong>Karier:</strong> Naik menjadi <strong>pejabat tinggi</strong> di bawah raja Darius (Daniel 6:1-3).</li>
+                <li><strong>Reputasi:</strong> Dikenal sebagai <strong>orang yang jujur, tidak korup, dan dapat dipercaya</strong> (Daniel 6:4-5).</li>
+            </ul>
+
+            <h4>C. Guncangan (Daniel 6:6-17)</h4>
+            <ul>
+                <li><strong>Konspirasi:</strong> Para pejabat iri dan <strong>membuat undang-undang</strong> yang melarang berdoa kepada siapa pun kecuali raja selama 30 hari.</li>
+                <li><strong>Tekanan:</strong> Daniel <strong>tetap berdoa tiga kali sehari</strong> kepada Allah, meski tahu risikonya (dilempar ke gua singa).</li>
+                <li><strong>Hasil:</strong> Allah <strong>menyelamatkan Daniel</strong> dari singa, sementara musuhnya dihukum (Daniel 6:18-28).</li>
+            </ul>
+
+            <img src="https://kimi-web-img.moonshot.cn/img/www.goodsalt.com/4be4f8d52104c32d64b33b54cf5adf2351c94898.jpg" alt="Daniel Dalam Doa" class="renungan-image">
+
+            <h3>3. Langkah-Langkah Iman Daniel untuk Tetap Kuat di Tengah Tekanan</h3>
+
+            <h4>A. Konsistensi dalam Ibadah (Daniel 6:10)</h4>
+            <p>Daniel <strong>tidak mengubah kebiasaan berdoanya</strong>, meski ada ancaman.</p>
+            <div class="highlight-box">
+                <strong>Pelajaran:</strong> Ibadah yang konsisten adalah fondasi keteguhan iman.
+            </div>
+
+            <h4>B. Keberanian untuk Berbeda (Daniel 1:8, 6:10)</h4>
+            <p>Menolak makanan najis dan <strong>tetap berdoa meski dilarang</strong>.</p>
+            <div class="highlight-box">
+                <strong>Pelajaran:</strong> Jangan takut berbeda jika itu berarti setia kepada Allah.
+            </div>
+
+            <h4>C. Kepercayaan pada Kedaulatan Allah (Daniel 2:20-23, 6:23)</h4>
+            <p>Daniel <strong>percaya Allah berkuasa</strong> atas hidupnya, bahkan di gua singa.</p>
+            <div class="highlight-box">
+                <strong>Pelajaran:</strong> Allah mengendalikan segalanya, termasuk tekanan yang kita hadapi.
+            </div>
+
+            <h4>D. Integritas dalam Pekerjaan (Daniel 6:4-5)</h4>
+            <p>Daniel <strong>tidak korup dan jujur</strong> dalam pekerjaannya.</p>
+            <div class="highlight-box">
+                <strong>Pelajaran:</strong> Integritas membuat kesaksian kita kuat, bahkan di tengah musuh.
+            </div>
+
+            <h4>E. Kesaksian yang Nyata (Daniel 6:25-27)</h4>
+            <p>Raja Darius <strong>mengakui Allah Daniel</strong> setelah melihat mukjizat.</p>
+            <div class="highlight-box">
+                <strong>Pelajaran:</strong> Hidup yang setia dapat membawa orang lain kepada Allah.
+            </div>
+
+            <img src="https://kimi-web-img.moonshot.cn/img/i.ytimg.com/21b4fd8fff43ea552414fce9564ef9b1e770e3fe.jpg" alt="Iman di Tengah Tekanan" class="renungan-image">
+
+            <h3>Renungan Pagi: Keteguhan Iman di Tengah Badai Kehidupan</h3>
+            
+            <p>Kisah Daniel mengingatkan kita bahwa iman yang sejati tidak diukur saat hidup nyaman, tetapi saat tekanan datang menghantam. Ketika Daniel dibuang ke Babel, ia kehilangan segalanya—tanah air, keluarga, identitasnya sebagai bangsawan. Namun, satu hal yang tidak pernah ia lepaskan: hubungannya dengan Allah.</p>
+
+            <p>Di era modern ini, kita mungkin tidak dihadapkan pada gua singa fisik, tetapi kita menghadapi "singa-singa" lainnya: tekanan pekerjaan yang menuntut kita berkompromi dengan integritas, lingkungan sosial yang mencemooh kepercayaan kita, atau bahkan ketakutan akan masa depan yang membuat kita ragu akan penyertaan Tuhan.</p>
+
+            <div class="renungan-quote">
+                <p>"Daniel, sesudah mengetahui bahwa surat perintah itu telah ditandatangani, masuk ke rumahnya. Dan di kamarnya yang atas, dengan jendela-jendelanya terbuka ke arah Yerusalem, tiga kali sehari ia berlutut, berdoa dan memuji Allahnya, seperti yang biasa dilakukannya."</p>
+                <p style="text-align: right; margin-top: 1rem; font-weight: 600;">— Daniel 6:10</p>
+            </div>
+
+            <p>Perhatikan kata kunci dalam ayat ini: <strong>"seperti yang biasa dilakukannya."</strong> Daniel tidak menunggu krisis untuk membangun hubungannya dengan Allah. Ia sudah membangun kebiasaan rohani yang kokoh sejak lama. Ketika tekanan datang, ia tidak perlu mencari formula baru atau panik memikirkan strategi; ia hanya perlu tetap setia pada apa yang selama ini ia lakukan.</p>
+
+            <div class="renungan-refleksi">
+                <h4><i class="fas fa-lightbulb"></i> Pertanyaan Refleksi</h4>
+                <ul>
+                    <li>Apakah kita memiliki "kebiasaan Yerusalem" dalam hidup kita?</li>
+                    <li>Apakah ada waktu-waktu khusus di mana kita secara konsisten datang kepada Tuhan, tidak peduli seberapa sibuknya jadwal kita?</li>
+                    <li>Jika tekanan tiba-tiba datang hari ini, apakah iman kita sudah cukup kokoh untuk bertahan?</li>
+                </ul>
+            </div>
+
+            <div class="penutup-doa">
+                <h4><i class="fas fa-praying-hands"></i> Doa Penutup</h4>
+                <p>Ya Bapa, ajar kami untuk teguh dalam iman seperti Daniel. Berikan kami kekuatan untuk tetap setia kepada-Mu di tengah segala tekanan dan godaan. Biarlah kami membangun kebiasaan rohani yang kokoh setiap hari, sehingga ketika badai datang, kami tetap berdiri teguh di atas batu karang. Jadikan kami terang bagi orang-orang di sekitar kami, sehingga mereka dapat melihat Allah melalui hidup kami. Dalam nama Yesus, kami berdoa. Amin.</p>
+                <p style="margin-top: 1.5rem; font-style: italic; color: var(--secondary);">
+                    <i class="fas fa-star"></i> Panggilan: Jadilah terang di tempat kerja, sekolah, atau masyarakat, meski ada tekanan.
+                </p>
+            </div>
+        </section>
     </main>
 
     <footer id="tentang">
@@ -473,6 +575,12 @@
                 <p style="margin-top: 1rem; font-size: 0.85rem;">
                     © 2026 By Ps. Yanto Goutama | Dibuat dengan <i class="fas fa-heart" style="color: #e74c3c;"></i> untuk memperkuat iman
                 </p>
+            </div>
+            <div class="social-links">
+                <a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                <a href="#" title="Email"><i class="fas fa-envelope"></i></a>
             </div>
         </div>
     </footer>
