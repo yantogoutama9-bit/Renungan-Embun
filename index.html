@@ -325,246 +325,26 @@
 
     <!-- JAVASCRIPT -->
     <script>
-   // ============================================================
-// KONFIGURASI - GANTI API KEY ANDA DI SINI
 // ============================================================
-const GROQ_API_KEY = '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';
-const GROQ_MODEL = 'llama3-8b-8192'; // Ganti model ke yang lebih stabil
+// KONFIGURASI - API KEY GROQ BARU
+// ============================================================
+const GROQ_API_KEY = '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';
+const GROQ_MODEL = 'llama3-8b-8192';
 
 // State
 let currentDate = new Date();
 let currentFilter = 'all';
 
-// Database Artikel (tetap sama)
-const articlesDatabase = [
-    {
-        id: 1,
-        slug: 'daniel-teguh-dalam-iman',
-        title: "Daniel: Teguh dalam Iman di Tengah Tekanan",
-        excerpt: "Pelajari bagaimana Daniel mempertahankan imannya di tengah konspirasi dan ancaman gua singa.",
-        category: "character",
-        categoryLabel: "Karakter",
-        date: "8 Maret 2026",
-        readTime: "7 menit",
-        image: "https://images.unsplash.com/photo-1504052434569-70ad5836ab65?w=800&auto=format&fit=crop&q=80",
-        author: "Tim Renungan",
-        content: `<p class="text-xl text-stone-600 italic mb-8 border-l-4 border-amber-500 pl-6">Kisah Daniel mengingatkan kita bahwa iman yang sejati tidak diukur saat hidup nyaman, tetapi saat tekanan datang menghantam.</p>
-            <h2>1. Arti Nama Daniel</h2><div class="verse-box p-6 rounded-xl mb-6"><h3 class="text-2xl font-bold text-amber-700 mb-3 serif">דָּנִיֵּאל (Daniel)</h3><p class="text-lg text-stone-700 mb-4">"Allah adalah Hakimku"</p><p class="text-stone-700 italic">Nama ini mencerminkan keyakinan Daniel bahwa Allah berdaulat atas hidupnya.</p></div>
-            <h2>2. Keadaan Hidup Daniel</h2><h3>Latar Belakang</h3><ul><li>Daniel adalah seorang <strong>Yahudi bangsawan</strong> yang dibawa ke pembuangan di Babel.</li><li>Dipilih untuk dididik di istana Babel, tetapi <strong>menolak makanan raja</strong> yang najis.</li><li>Cerdas, berpengetahuan, dan <strong>setia kepada Allah</strong>.</li></ul>
-            <h2>3. Langkah-Langkah Iman</h2><h3>A. Konsistensi dalam Ibadah</h3><p>Daniel <strong>tidak mengubah kebiasaan berdoanya</strong>, meski ada ancaman.</p>
-            <h2>Penutup</h2><p><strong>Doa:</strong> Mintalah kekuatan untuk tegak dalam iman seperti Daniel.</p>`
-    },
-    {
-        id: 2,
-        slug: 'mujizat-di-balik-masalah',
-        title: "Mujizat di Balik Masalah",
-        excerpt: "Mengapa Tuhan membiarkan masalah terjadi dalam hidup kita? Temukan jawabannya dalam kisah Paulus.",
-        category: "hope",
-        categoryLabel: "Pengharapan",
-        date: "10 Maret 2026",
-        readTime: "6 menit",
-        image: "https://images.unsplash.com/photo-1499209974431-276ddd46d35f?w=800&auto=format&fit=crop&q=80",
-        author: "Tim Renungan",
-        content: `<p class="text-xl text-stone-600 italic mb-8 border-l-4 border-amber-500 pl-6">Masalah bukan tanda bahwa Tuhan meninggalkan kita.</p><h2>Mengapa Masalah Datang?</h2><p>Seringkali kita bertanya, "Tuhan, mengapa ini terjadi padaku?"</p><blockquote>"Kita tahu sekarang, bahwa Allah turut bekerja dalam segala sesuatu untuk mendatangkan kebaikan." — Roma 8:28</blockquote><h2>Doa</h2><p>Ya Tuhan, ajar aku untuk percaya bahwa Engkau bekerja di balik setiap masalah.</p>`
-    },
-    {
-        id: 3,
-        slug: 'kasih-tanpa-batas',
-        title: "Kasih Tanpa Batas: Mengasihi Musuh",
-        excerpt: "Mengasihi mereka yang menyakiti kita adalah perintah yang paling sulit, namun itulah ciri khas pengikut Kristus.",
-        category: "love",
-        categoryLabel: "Kasih",
-        date: "5 Maret 2026",
-        readTime: "8 menit",
-        image: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?w=800&auto=format&fit=crop&q=80",
-        author: "Tim Renungan",
-        content: `<p class="text-xl text-stone-600 italic mb-8 border-l-4 border-amber-500 pl-6">"Kasihilah musuhmu dan berdoalah bagi mereka yang menganiaya kamu."</p><h2>Standar Kasih yang Tinggi</h2><p>Yesus menaikkan standar kasih dari sekadar "mencintai tetangga" menjadi "mencintai musuh."</p><h2>Kasih Agape</h2><p>Kasih yang dimaksud Yesus adalah <strong>agape</strong>—kasih tanpa syarat yang datang dari Allah.</p>`
-    }
-];
-
-// Database Renungan Offline (8 renungan berbeda)
-const offlineDevotionsDB = [
-    {
-        title: "Kasih yang Tak Terbatas", 
-        verse: "Sebab Allah begitu mengasihi dunia, sehingga Ia telah mengaruniakan Anak-Nya yang tunggal, supaya setiap orang yang percaya kepada-Nya tidak binasa, melainkan beroleh hidup yang kekal.", 
-        reference: "Yohanes 3:16", 
-        content: "<p class='mb-4'>Kasih Allah tidak mengenal batas waktu, ruang, atau keadaan. Di saat kita merasa tidak berharga, Allah membuktikan kasih-Nya melalui pengorbanan Yesus di kayu salib.</p><blockquote class='border-l-4 border-amber-500 pl-4 italic text-stone-600 my-6'>Tidak ada kasih yang lebih besar dari pada kasih seseorang yang memberikan nyawanya untuk sahabat-sahabatnya.</blockquote><p class='mb-4'>Hari ini, terimalah kasih ini dengan sepenuh hati. Engkau berharga di mata-Nya, tidak karena apa yang telah engkau lakukan, melainkan karena kasih karunia-Nya.</p>",
-        prayer: "Bapa Surgawi, terima kasih untuk kasihMu yang tak terbatas. Ajarkan kami untuk menerima kasih karuniaMu dengan rendah hati dan membagikannya kepada sesama. Dalam nama Yesus, kami berdoa. Amin."
-    },
-    {
-        title: "Tenang dalam Perlindungan-Nya", 
-        verse: "TUHAN adalah gembalaku, takkan kekurangan aku. Ia membaringkan aku di padang yang berumput hijau, Ia membimbing aku ke air yang tenang.", 
-        reference: "Mazmur 23:1-2", 
-        content: "<p class='mb-4'>Dalam dunia yang penuh kekhawatiran dan ketidakpastian, ada sebuah tempat perlindungan yang tak pernah gagal: dalam pangkuan Sang Gembala yang baik.</p><p class='mb-4'>Ia tidak hanya memberikan yang kita inginkan, tetapi yang kita butuhkan. Seperti domba yang digembalakan, kita dipimpin ke padang yang subur dan air yang menyegarkan. Percayalah, Ia menuntunmu di jalan yang benar untuk kemuliaan nama-Nya.</p>",
-        prayer: "Ya Tuhan, terima kasih karena Engkau gembala kami yang setia. Berikan kami ketenangan hati untuk percaya bahwa Engkau selalu menyediakan yang terbaik. Dalam nama Yesus, kami berdoa. Amin."
-    },
-    {
-        title: "Kuat dalam Kelemahan", 
-        verse: "Segala perkara dapat kutanggung di dalam Dia yang memberikan kekuatan kepadaku.", 
-        reference: "Filipi 4:13", 
-        content: "<p class='mb-4'>Kita sering merasa tidak cukup kuat untuk menghadapi tantangan hidup. Beban pekerjaan, masalah keluarga, dan tekanan hidup seakan menggunung tinggi. Tapi Paulus mengingatkan kita: bukan kekuatan kita sendiri, melainkan Kristus yang bekerja dalam kita.</p><p class='mb-4'>Ketika kau merasa lemah, itulah saat kuasa-Nya sempurna. Jangan berusaha menyelesaikan segala sesuatu dengan kekuatan sendiri, serahkanlah kepada Dia yang maha kuat.</p>",
-        prayer: "Tuhan Yesus, kami mengakui kelemahan kami. Kami butuh kekuatanMu setiap hari. Isi kami dengan RohMu yang kudus agar kami dapat menjalani hari ini dengan penuh kemenangan. Amin."
-    },
-    {
-        title: "Harapan di Ujung Jalan", 
-        verse: "Sebab Aku mengetahui rancangan-rancangan apa yang ada pada-Ku mengenai kamu, demikianlah firman TUHAN, yaitu rancangan damai sejahtera dan bukan rancangan kecelakaan, untuk memberikan kepadamu hari depan yang penuh harapan.", 
-        reference: "Yeremia 29:11", 
-        content: "<p class='mb-4'>Ketika jalan tampak buntu dan masa depan kabur, ingatlah: Tuhan sudah merancangkan kebaikan untukmu. Rancangan-Nya bukan untuk mencelakakan, melainkan memberikan hari depan yang penuh harapan.</p><p class='mb-4'>Mungkin saat ini kita tidak mengerti jalan yang dilalui, tetapi percayalah bahwa setiap langkah kita diatur oleh tangan-Nya yang penuh kasih. Ia melihat gambaran besar yang kita tidak lihat.</p>",
-        prayer: "Bapa, kami percaya rancanganMu lebih besar dari rancangan kami. Berikan kami iman untuk menantikan waktuMu yang sempurna. Dalam nama Yesus, kami berdoa. Amin."
-    },
-    {
-        title: "Damai yang Melampaui Akal", 
-        verse: "Damai sejahtera Allah yang melampaui segala akal, akan memelihara hati dan pikiranmu dalam Kristus Yesus.", 
-        reference: "Filipi 4:7", 
-        content: "<p class='mb-4'>Ada sebuah damai yang tidak tergantung pada keadaan sekitar. Damai yang hadir bahkan ketika badai menerpa. Ini adalah hadiah dari Allah bagi mereka yang datang kepada-Nya dengan doa dan ucapan syukur.</p><p class='mb-4'>Dunia menawarkan penghiburan sementara, tetapi Kristus menawarkan damai kekal. Damai yang melindungi hati dan pikiran kita dari kekhawatiran yang menghancurkan.</p>",
-        prayer: "Tuhan, kami rindu akan damaiMu. Berikan kami hati yang tenang untuk menghadapi setiap badai kehidupan. Dalam nama Yesus, kami berdoa. Amin."
-    },
-    {
-        title: "Iman Sebutir Sesawi", 
-        verse: "Sesungguhnya kalau imanmu sebesar biji sesawi saja, engkau dapat berkata kepada gunung ini: Pindah dari sini ke sana, maka gunung itu akan pindah, dan bagi Allah tidak ada yang mustahil.", 
-        reference: "Matius 17:20", 
-        content: "<p class='mb-4'>Allah tidak menuntut iman yang besar, tetapi iman yang tulus sekecil biji sesawi. Dengan iman yang sederhana namun teguh, kita dapat melihat kuasa Allah bergerak dalam hidup kita.</p><p class='mb-4'>Jangan meremehkan langkah kecilmu dalam iman. Setiap kali kau memilih percaya meski keadaan sulit, itu adalah kemenangan rohani yang besar di mata Allah.</p>",
-        prayer: "Ya Tuhan, tambahkan iman kami. Berikan kami keberanian untuk percaya meski kami tidak melihat jalan keluar. Dalam nama Yesus, kami berdoa. Amin."
-    },
-    {
-        title: "Pengampunan yang Menyembuhkan", 
-        verse: "Jika kamu mengampuni orang salahnya, Bapamu yang di sorga akan mengampuni kamu juga.", 
-        reference: "Matius 6:14", 
-        content: "<p class='mb-4'>Mengampuni bukan tentang membenarkan kesalahan orang lain, tetapi tentang membebaskan diri sendiri dari bekas luka. Pengampunan adalah hadiah yang kita berikan kepada diri sendiri atas izin Allah.</p><p class='mb-4'>Ketika kita mengampuni seperti Kristus mengampuni kita, kita mengalami pemulihan yang luar biasa. Hati yang sebelumnya penuh kepahitan menjadi tempat tinggal Roh Kudus.</p>",
-        prayer: "Tuhan, ajarkan kami untuk mengampuni seperti Engkau mengampuni kami. Berikan kami hati yang lembut dan penuh kasih. Dalam nama Yesus, kami berdoa. Amin."
-    },
-    {
-        title: "Sumber Kekuatan Baru", 
-        verse: "Tetapi orang yang menanti-nantikan TUHAN akan mendapat kekuatan baru: mereka akan naik dengan sayap seperti rajawali; mereka akan berlari dan tidak menjadi lesu, mereka akan berjalan dan tidak menjadi lelah.", 
-        reference: "Yesaya 40:31", 
-        content: "<p class='mb-4'>Ketika kita merasa habis dan tidak sanggup lagi melangkah, ada sebuah janji indah: mereka yang menanti-nantikan Tuhan akan mendapat kekuatan baru. Bukan kekuatan dari diri sendiri, tetapi kekuatan dari Sang Pencipta.</p><p class='mb-4'>Seperti rajawali yang merentangkan sayap dan naik tinggi memakai angin, demikianlah kita diangkat oleh kuasa Roh Kudus. Kita dapat terbang di atas badai, bukan karena kita kuat, tetapi karena Dia yang memegang kita.</p>",
-        prayer: "Bapa, kami lelah dan letih. Datanglah dan isi kami dengan kekuatan baru. Angkat kami untuk terbang di atas setiap badai hidup. Dalam nama Yesus, kami berdoa. Amin."
-    }
-];
-
-// Logger
-function log(message, type = 'info') {
-    const prefix = type === 'error' ? '[ERROR]' : '[INFO]';
-    console.log(`${prefix} ${message}`);
-}
-
-// Navigation
-function showPage(pageName) {
-    document.querySelectorAll('.page-content').forEach(page => page.classList.add('hidden'));
-    document.getElementById(`page-${pageName}`).classList.remove('hidden');
-    
-    document.querySelectorAll('.nav-link').forEach(link => {
-        link.classList.remove('active', 'text-amber-600');
-        link.classList.add('text-stone-600');
-        if(link.getAttribute('data-page') === pageName) {
-            link.classList.add('active', 'text-amber-600');
-            link.classList.remove('text-stone-600');
-        }
-    });
-    
-    document.getElementById('mobile-menu').classList.add('hidden');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    window.location.hash = pageName;
-
-    if(pageName === 'artikel') renderArticles();
-    else if(pageName === 'santapan') loadDailyDevotion();
-}
-
-function toggleMobileMenu() {
-    document.getElementById('mobile-menu').classList.toggle('hidden');
-}
-
-// Artikel Functions
-function renderArticles() {
-    const grid = document.getElementById('articlesGrid');
-    const filtered = currentFilter === 'all' ? articlesDatabase : articlesDatabase.filter(a => a.category === currentFilter);
-    
-    grid.innerHTML = filtered.map(article => `
-        <article class="bg-white rounded-2xl shadow-sm border border-stone-100 overflow-hidden card-hover cursor-pointer" onclick="showArticleDetail(${article.id})">
-            <div class="relative h-48 overflow-hidden">
-                <img src="${article.image}" alt="${article.title}" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
-                <div class="absolute top-4 left-4">
-                    <span class="px-3 py-1 rounded-full bg-white/90 backdrop-blur text-amber-700 text-xs font-semibold">${article.categoryLabel}</span>
-                </div>
-            </div>
-            <div class="p-6">
-                <div class="flex items-center gap-2 text-sm text-stone-500 mb-3">
-                    <span>${article.date}</span><span>•</span><span><i class="far fa-clock mr-1"></i>${article.readTime}</span>
-                </div>
-                <h3 class="serif text-xl font-bold text-stone-900 mb-3 line-clamp-2">${article.title}</h3>
-                <p class="text-stone-600 text-sm line-clamp-3 mb-4">${article.excerpt}</p>
-                <div class="flex items-center justify-between">
-                    <span class="text-sm text-stone-500">Oleh ${article.author}</span>
-                    <span class="text-amber-600 text-sm font-medium flex items-center gap-1">Baca <i class="fas fa-arrow-right text-xs"></i></span>
-                </div>
-            </div>
-        </article>
-    `).join('');
-}
-
-function filterArticles(category) {
-    currentFilter = category;
-    document.querySelectorAll('.filter-btn').forEach(btn => {
-        const isActive = btn.getAttribute('data-filter') === category;
-        btn.classList.toggle('active', isActive);
-        btn.classList.toggle('bg-amber-500', isActive);
-        btn.classList.toggle('text-white', isActive);
-        btn.classList.toggle('bg-white', !isActive);
-        btn.classList.toggle('text-stone-600', !isActive);
-    });
-    renderArticles();
-}
-
-function showArticleDetail(id) {
-    const article = articlesDatabase.find(a => a.id === id);
-    if(!article) return;
-    
-    document.getElementById('articleDetailContent').innerHTML = `
-        <header class="mb-8">
-            <div class="flex items-center gap-2 text-sm text-stone-500 mb-4">
-                <span class="px-3 py-1 rounded-full bg-amber-100 text-amber-700 font-medium">${article.categoryLabel}</span>
-                <span>•</span><span>${article.date}</span><span>•</span><span><i class="far fa-clock mr-1"></i>${article.readTime} baca</span>
-            </div>
-            <h1 class="serif text-4xl md:text-5xl font-bold text-stone-900 mb-6 leading-tight">${article.title}</h1>
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center text-amber-600"><i class="fas fa-user"></i></div>
-                <div><p class="font-semibold text-stone-800">${article.author}</p><p class="text-sm text-stone-500">Penulis Renungan</p></div>
-            </div>
-        </header>
-        <img src="${article.image}" alt="${article.title}" class="w-full h-64 md:h-96 object-cover rounded-2xl mb-8 shadow-lg">
-        <div class="article-content">${article.content}</div>
-        <div class="mt-12 pt-8 border-t border-stone-200 flex items-center justify-between">
-            <button onclick="showPage('artikel')" class="flex items-center gap-2 text-stone-500 hover:text-amber-600 transition-colors"><i class="fas fa-arrow-left"></i> Kembali</button>
-            <div class="flex items-center gap-3">
-                <button onclick="shareArticle('${article.slug}')" class="w-10 h-10 rounded-full bg-stone-100 flex items-center justify-center text-stone-600 hover:bg-amber-100 hover:text-amber-600"><i class="fas fa-share-alt"></i></button>
-            </div>
-        </div>
-    `;
-    
-    const related = articlesDatabase.filter(a => a.id !== article.id && a.category === article.category).slice(0, 3);
-    document.getElementById('relatedArticles').innerHTML = related.map(a => `
-        <div class="bg-white rounded-xl shadow-sm border border-stone-100 p-4 cursor-pointer hover:shadow-md transition-shadow" onclick="showArticleDetail(${a.id})">
-            <h4 class="font-bold text-stone-800 mb-2 line-clamp-2">${a.title}</h4>
-            <p class="text-sm text-stone-500">${a.date}</p>
-        </div>
-    `).join('') || '<p class="text-stone-500 text-center">Tidak ada artikel terkait</p>';
-    
-    showPage('artikel-detail');
-}
-
-function shareArticle(slug) {
-    const url = `${window.location.origin}#artikel-${slug}`;
-    navigator.clipboard.writeText(url).then(() => alert('Link disalin!'));
-}
+// Database Artikel & Offline (sama seperti sebelumnya)
+const articlesDatabase = [/* ... copy dari kode sebelumnya ... */];
+const offlineDevotionsDB = [/* ... copy dari kode sebelumnya ... */];
 
 // ============================================================
 // SISTEM RENUNGAN HARIAN - VERSI SEDERHANA & STABIL
 // ============================================================
 
 async function loadDailyDevotion(forceRefresh = false) {
-    log('Memulai loadDailyDevotion...');
-    showLoading(true);
-    hideError();
+    console.log('[INFO] Memulai loadDailyDevotion...');
     
     const dateKey = formatDate(currentDate);
     const isToday = dateKey === formatDate(new Date());
@@ -572,102 +352,107 @@ async function loadDailyDevotion(forceRefresh = false) {
     // Update tampilan tanggal
     document.getElementById('currentDateDisplay').textContent = formatDateID(currentDate);
     
-    // Cek cache untuk tanggal yang sama
+    // Show loading
+    document.getElementById('loadingState').classList.remove('hidden');
+    document.getElementById('devotionContent').classList.add('hidden');
+    document.getElementById('errorState').classList.add('hidden');
+    
+    // Cek cache
     if(!forceRefresh) {
-        const cached = getFromLocalStorage(dateKey);
+        const cached = localStorage.getItem('devotion_' + dateKey);
         if(cached) {
-            log('Menggunakan cache localStorage');
-            renderDevotion(cached);
-            showLoading(false);
+            console.log('[INFO] Menggunakan cache');
+            renderDevotion(JSON.parse(cached));
             updateStatus('Cache', 'gray');
             return;
         }
     }
     
-    // Jika bukan hari ini, gunakan offline DB
+    // Jika bukan hari ini, langsung offline
     if(!isToday) {
-        log('Bukan hari ini, menggunakan offline DB');
-        const offlineDevotion = generateOfflineDevotion();
-        renderDevotion(offlineDevotion);
-        showLoading(false);
-        updateStatus('Arsip Offline', 'orange');
+        console.log('[INFO] Bukan hari ini, mode offline');
+        const offline = generateOfflineDevotion();
+        renderDevotion(offline);
+        updateStatus('Arsip', 'orange');
         return;
     }
     
-    // Coba ambil dari API (hanya untuk hari ini)
+    // Coba API untuk hari ini
     try {
-        log('Mencoba fetch dari Groq API...');
+        console.log('[INFO] Mencoba API...');
         const devotion = await fetchFromGroqAPI();
-        log('Berhasil dari API');
+        console.log('[INFO] Sukses dari API');
         
         renderDevotion(devotion);
-        saveToLocalStorage(devotion, dateKey);
+        localStorage.setItem('devotion_' + dateKey, JSON.stringify(devotion));
         updateStatus('Live API', 'green');
         
     } catch (error) {
-        log(`Error API: ${error.message}`, 'error');
+        console.error('[ERROR]', error.message);
         // Fallback ke offline
-        const offlineDevotion = generateOfflineDevotion();
-        renderDevotion(offlineDevotion);
-        updateStatus('Mode Offline', 'orange');
-        showError('Gagal terhubung ke server. Menampilkan renungan lokal.');
-    } finally {
-        showLoading(false);
-        updateLastUpdateTime();
+        const offline = generateOfflineDevotion();
+        renderDevotion(offline);
+        updateStatus('Offline', 'orange');
+        showError('Server AI sedang sibuk. Menampilkan renungan lokal.');
     }
+    
+    updateLastUpdateTime();
 }
 
-// Fetch dari Groq API - VERSI SEDERHANA TANPA JSON MODE
+// Fetch dari API - FORMAT TEXT BIASA (bukan JSON)
 async function fetchFromGroqAPI() {
-    const prompt = `Buatkan renungan harian Kristen untuk tanggal ${formatDateID(currentDate)}.
+    const prompt = `Tulis renungan harian Kristen untuk ${formatDateID(currentDate)}.
 
-FORMAT OUTPUT (gunakan format ini persis):
-TITLE: [Judul Renungan]
-VERSE: [Teks ayat Alkitab lengkap]
-REF: [Kitab Pasal:Ayat]
-CONTENT:
+GAYA: hangat, rohani, gunakan "kita/engkau/Bapa"
+PANJANG: 300-400 kata
+
+FORMAT OUTPUT (4 bagian):
+
+JUDUL: [judul inspiratif]
+
+AYAT: [teks ayat Alkitab lengkap]
+
+REFERENSI: [Kitab Pasal:Ayat]
+
+ISI:
 [Paragraf 1]
 
 [Paragraf 2]
 
 [Paragraf 3]
-PRAYER: [Doa penutup]
 
-Gaya bahasa: gunakan "kita/bapa/engkau" (bukan "saya/kamu"). Panjang: 300-400 kata.`;
+DOA: [doa penutup]`;
 
     const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${GROQ_API_KEY}`
+            'Authorization': 'Bearer ' + GROQ_API_KEY
         },
         body: JSON.stringify({
             model: GROQ_MODEL,
             messages: [
-                { 
-                    role: "system", 
-                    content: "Kamu adalah penulis renungan rohani Kristen. Tulis dengan format yang diminta, tidak perlu karakter khusus atau markdown." 
-                },
-                { role: "user", content: prompt }
+                {role: "system", content: "Kamu adalah penulis renungan rohani. Tulis sesuai format yang diminta."},
+                {role: "user", content: prompt}
             ],
             temperature: 0.7,
-            max_tokens: 800
+            max_tokens: 1000
         })
     });
 
     if(!response.ok) {
-        const error = await response.text();
-        throw new Error(`API Error: ${error}`);
+        const err = await response.text();
+        throw new Error('API Error: ' + err);
     }
     
     const data = await response.json();
     const text = data.choices[0].message.content;
     
-    // Parse text format (bukan JSON)
+    // Parse format text
     return parseDevotionText(text);
 }
 
-// Parse format text menjadi objek
+// Parse text ke objek
 function parseDevotionText(text) {
     const lines = text.split('\n');
     let result = {
@@ -676,50 +461,45 @@ function parseDevotionText(text) {
         verse: '',
         reference: '',
         content: '',
-        prayer: '',
-        source: 'Groq API (Live)'
+        source: 'Groq API'
     };
     
-    let currentSection = '';
+    let inContent = false;
     let contentLines = [];
     
     for(let line of lines) {
         line = line.trim();
         if(!line) continue;
         
-        if(line.startsWith('TITLE:')) {
-            result.title = line.replace('TITLE:', '').trim();
-        } else if(line.startsWith('VERSE:')) {
-            result.verse = line.replace('VERSE:', '').trim();
-        } else if(line.startsWith('REF:')) {
-            result.reference = line.replace('REF:', '').trim();
-        } else if(line.startsWith('CONTENT:')) {
-            currentSection = 'content';
-        } else if(line.startsWith('PRAYER:')) {
-            if(contentLines.length > 0) {
-                result.content = contentLines.join('\n\n');
-            }
-            result.prayer = line.replace('PRAYER:', '').trim();
-            currentSection = '';
-        } else if(currentSection === 'content') {
+        if(line.startsWith('JUDUL:')) {
+            result.title = line.replace('JUDUL:', '').trim();
+        } else if(line.startsWith('AYAT:')) {
+            result.verse = line.replace('AYAT:', '').trim();
+        } else if(line.startsWith('REFERENSI:')) {
+            result.reference = line.replace('REFERENSI:', '').trim();
+        } else if(line.startsWith('ISI:')) {
+            inContent = true;
+        } else if(line.startsWith('DOA:')) {
+            inContent = false;
+            const prayer = line.replace('DOA:', '').trim();
+            // Format content
+            result.content = contentLines.map(p => `<p class="mb-4">${p}</p>`).join('') + 
+                `<div class="mt-8 p-6 bg-stone-50 rounded-xl border-l-4 border-amber-500">
+                    <h4 class="font-bold text-stone-800 mb-3"><i class="fas fa-praying-hands mr-2 text-amber-600"></i>Doa</h4>
+                    <p class="text-stone-700 italic">${prayer}</p>
+                </div>`;
+        } else if(inContent) {
             contentLines.push(line);
         }
     }
     
-    // Format content ke HTML
-    const formattedContent = contentLines.map(p => `<p class="mb-4">${p}</p>`).join('');
-    
-    return {
-        ...result,
-        content: formattedContent + `<div class="mt-8 p-6 bg-stone-50 rounded-xl border-l-4 border-amber-500"><h4 class="font-bold text-stone-800 mb-3"><i class="fas fa-praying-hands mr-2 text-amber-600"></i>Doa</h4><p class="text-stone-700 italic leading-relaxed">${result.prayer}</p></div>`
-    };
+    return result;
 }
 
-// Generate renungan offline
+// Generate offline
 function generateOfflineDevotion() {
     const dateStr = formatDate(currentDate);
-    const dateNum = dateStr.split('-').join('').slice(-6);
-    const index = parseInt(dateNum) % offlineDevotionsDB.length;
+    const index = parseInt(dateStr.replace(/-/g, '')) % offlineDevotionsDB.length;
     const selected = offlineDevotionsDB[index];
     
     return {
@@ -727,42 +507,33 @@ function generateOfflineDevotion() {
         title: selected.title,
         verse: selected.verse,
         reference: selected.reference,
-        content: selected.content + `<div class="mt-8 p-6 bg-amber-50 rounded-xl border-l-4 border-amber-500"><h4 class="font-bold text-amber-800 mb-3"><i class="fas fa-info-circle mr-2"></i>Mode Offline</h4><p class="text-amber-700 text-sm mb-3">Renungan ini diambil dari database lokal.</p><div class="mt-4 pt-4 border-t border-amber-200"><h4 class="font-bold text-stone-800 mb-2">Doa</h4><p class="text-stone-700 italic">${selected.prayer}</p></div></div>`,
+        content: selected.content + `<div class="mt-8 p-6 bg-amber-50 rounded-xl border-l-4 border-amber-500">
+            <h4 class="font-bold text-amber-800 mb-3"><i class="fas fa-info-circle mr-2"></i>Mode Offline</h4>
+            <p class="text-amber-700 text-sm mb-3">Renungan dari database lokal.</p>
+            <div class="mt-4 pt-4 border-t border-amber-200">
+                <h4 class="font-bold text-stone-800 mb-2">Doa</h4>
+                <p class="text-stone-700 italic">${selected.prayer}</p>
+            </div>
+        </div>`,
         source: "Database Lokal"
     };
 }
 
 // Render ke UI
 function renderDevotion(devotion) {
-    document.getElementById('verseText').textContent = `"${devotion.verse}"`;
+    document.getElementById('verseText').textContent = '"' + devotion.verse + '"';
     document.getElementById('verseReference').textContent = devotion.reference;
     document.getElementById('devotionTitle').textContent = devotion.title;
     document.getElementById('devotionDate').textContent = formatDateID(new Date(devotion.date));
     document.getElementById('devotionBody').innerHTML = devotion.content;
     document.getElementById('sourceText').textContent = devotion.source;
     document.getElementById('aiSource').textContent = devotion.source;
+    
+    document.getElementById('loadingState').classList.add('hidden');
+    document.getElementById('devotionContent').classList.remove('hidden');
 }
 
-// UI Helpers
-function showLoading(show) {
-    document.getElementById('loadingState').classList.toggle('hidden', !show);
-    document.getElementById('devotionContent').classList.toggle('hidden', show);
-}
-
-function showError(message) {
-    const el = document.getElementById('errorMessage');
-    const container = document.getElementById('errorState');
-    if(el && container) {
-        el.textContent = message;
-        container.classList.remove('hidden');
-    }
-}
-
-function hideError() {
-    const container = document.getElementById('errorState');
-    if(container) container.classList.add('hidden');
-}
-
+// Update status badge
 function updateStatus(status, color) {
     const badge = document.querySelector('.auto-update-badge');
     const icon = document.getElementById('syncIcon');
@@ -770,44 +541,28 @@ function updateStatus(status, color) {
     
     if(text) text.textContent = status;
     
-    if(badge) {
-        const colors = {
-            'green': 'bg-green-100 text-green-700',
-            'orange': 'bg-orange-100 text-orange-700',
-            'gray': 'bg-gray-100 text-gray-700',
-            'red': 'bg-red-100 text-red-700'
-        };
-        badge.className = `inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold ${colors[color] || colors.gray}`;
-    }
+    const colors = {
+        'green': 'bg-green-100 text-green-700',
+        'orange': 'bg-orange-100 text-orange-700', 
+        'gray': 'bg-gray-100 text-gray-700'
+    };
+    
+    if(badge) badge.className = 'inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold ' + colors[color];
     
     if(icon) {
-        const icons = {
-            'green': 'fa-check-circle',
-            'orange': 'fa-wifi',
-            'gray': 'fa-database',
-            'red': 'fa-exclamation-triangle'
-        };
-        icon.className = `fas ${icons[color] || icons.gray}`;
+        const icons = {'green': 'fa-check-circle', 'orange': 'fa-wifi', 'gray': 'fa-database'};
+        icon.className = 'fas ' + icons[color];
     }
 }
 
-// LocalStorage
-function saveToLocalStorage(devotion, dateKey) {
-    try {
-        localStorage.setItem('devotion_' + dateKey, JSON.stringify(devotion));
-    } catch(e) {
-        log('Gagal save ke localStorage', 'error');
+// Error handler
+function showError(msg) {
+    const el = document.getElementById('errorMessage');
+    const box = document.getElementById('errorState');
+    if(el && box) {
+        el.textContent = msg;
+        box.classList.remove('hidden');
     }
-}
-
-function getFromLocalStorage(dateKey) {
-    try {
-        const saved = localStorage.getItem('devotion_' + dateKey);
-        if(saved) return JSON.parse(saved);
-    } catch(e) {
-        log('Gagal baca localStorage', 'error');
-    }
-    return null;
 }
 
 // Navigasi tanggal
@@ -825,21 +580,20 @@ function refreshDevotion() {
 function updateLastUpdateTime() {
     const now = new Date();
     const el = document.getElementById('lastUpdate');
-    if(el) el.textContent = now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+    if(el) el.textContent = now.toLocaleTimeString('id-ID', {hour: '2-digit', minute:'2-digit'});
 }
 
-// Share
+// Share functions
 function shareDevotion() {
     const title = document.getElementById('devotionTitle').textContent;
     const verse = document.getElementById('verseText').textContent;
-    const text = `${title}\n\n${verse}\n\nDibagikan dari RenunganRohani`;
-    navigator.clipboard.writeText(text).then(() => alert('Renungan disalin!'));
+    navigator.clipboard.writeText(title + '\n\n' + verse + '\n\nDari RenunganRohani').then(() => alert('Disalin!'));
 }
 
 function copyVerse() {
     const verse = document.getElementById('verseText').textContent;
     const ref = document.getElementById('verseReference').textContent;
-    navigator.clipboard.writeText(`${verse} - ${ref}`).then(() => alert('Ayat disalin!'));
+    navigator.clipboard.writeText(verse + ' - ' + ref).then(() => alert('Ayat disalin!'));
 }
 
 // Utility
@@ -849,22 +603,15 @@ function formatDate(date) {
 
 function formatDateID(date) {
     if(typeof date === 'string') date = new Date(date);
-    return date.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+    return date.toLocaleDateString('id-ID', {day: 'numeric', month: 'long', year: 'numeric'});
 }
 
 // Init
 window.addEventListener('load', () => {
     const hash = window.location.hash.replace('#', '');
-    if(hash.startsWith('artikel-')) {
-        const slug = hash.replace('artikel-', '');
-        const article = articlesDatabase.find(a => a.slug === slug);
-        if(article) showArticleDetail(article.id);
-        else showPage('artikel');
-    } else if(['artikel', 'santapan', 'tentang'].includes(hash)) {
-        showPage(hash);
-    } else {
-        showPage('artikel');
-    }
+    if(hash === 'santapan') showPage('santapan');
+    else if(hash === 'tentang') showPage('tentang');
+    else showPage('artikel');
 });
 
 window.addEventListener('scroll', () => {
@@ -874,5 +621,6 @@ window.addEventListener('scroll', () => {
     </script>
 </body>
 </html>
+
 
 
