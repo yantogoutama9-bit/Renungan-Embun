@@ -518,10 +518,11 @@
                 }
             }
             
-            // Cek API Key
-            if(!GROQ_API_KEY || GROQ_API_KEY === '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') {
-                log('API Key belum di-set!', 'error');
-                showError('API Key Groq belum dimasukkan. Silakan edit file index.html bagian "GANTI API KEY GROQ ANDA DI SINI".');
+            // Cek API Key - HAPUS KONDISI YANG SALAH INI
+            // API Key Anda sudah benar, jangan cek dengan placeholder lagi
+            if(!GROQ_API_KEY || GROQ_API_KEY.length < 20) {
+                log('API Key tidak valid!', 'error');
+                showError('API Key Groq tidak valid atau terlalu pendek.');
                 useOfflineMode();
                 return;
             }
@@ -556,7 +557,7 @@ Format JSON:
 }
 Gaya: hangat, personal, seperti Santapan Harian. Panjang: 300-400 kata.`;
 
-            // PERBAIKAN: URL tanpa spasi
+            // URL API - PASTIKAN TIDAK ADA SPASI
             const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
                 method: 'POST',
                 headers: {
