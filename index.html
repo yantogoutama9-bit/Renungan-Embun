@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
 <meta charset="UTF-8">
 <title>Renungan Harian</title>
@@ -10,27 +10,22 @@
 
 <div class="container">
 
-<h1>Renungan Hari Ini</h1>
+<h1>Renungan Harian</h1>
+<p id="tanggal"></p>
 
-<div id="renungan"></div>
+<div class="card">
+<h2>Renungan Embun Pagi</h2>
+<div id="renungan">Memuat renungan...</div>
+</div>
 
-<a href="quotes.html" class="btn">Quotes Rohani</a>
+<div class="card">
+<h2>Quotes Hari Ini</h2>
+<div id="quote">Memuat quote...</div>
+</div>
 
 </div>
 
-<script>
-
-let today = new Date();
-let y = today.getFullYear();
-let m = String(today.getMonth()+1).padStart(2,'0');
-let d = String(today.getDate()).padStart(2,'0');
-
-let url = `https://alkitab.mobi/2/renungan/roc/${y}/${m}/${d}/`;
-
-document.getElementById("renungan").innerHTML =
-`<iframe src="${url}" width="100%" height="700" frameborder="0"></iframe>`;
-
-</script>
+<script src="app.js"></script>
 
 </body>
 </html>
