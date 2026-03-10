@@ -1,31 +1,68 @@
 <?php
 
+function ambilHTML($url){
+
+$ch = curl_init();
+
+curl_setopt($ch, CURLOPT_URL, $url);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0");
+
+$html = curl_exec($ch);
+
+curl_close($ch);
+
+return $html;
+}
+
 $date = date("Y/m/d");
 
 $urlRenungan = "https://alkitab.mobi/2/renungan/roc/$date/";
 $urlQuote = "https://rehobot.org/category/quote/";
 
-/* ambil renungan */
+$htmlRenungan = ambilHTML($urlRenungan);
+$htmlQuote = ambilHTML($urlQuote);
 
-$html = file_get_contents($urlRenungan);
+$renungan = "Renungan tidak ditemukan";
+$quote = "Quote tidak ditemukan";
 
-preg_match('/<article.*?>(.*?)<\/article>/s',$html,$match);
+/* PARSE RENUNGAN */
 
-$renungan = $match[1] ?? "Renungan tidak ditemukan";
+libxml_use_internal_errors(true);
 
-/* ambil quotes */
+$dom = new DOMDocument();
+$dom->loadHTML($htmlRenungan);
 
-$htmlQuote = file_get_contents($urlQuote);
+$articles = $dom->getElementsByTagName("article");
 
-preg_match_all('/<blockquote.*?>(.*?)<\/blockquote>/s',$htmlQuote,$q);
+if($articles->length > 0){
+$renungan = $dom->saveHTML($articles->item(0));
+}
 
-$quotes = $q[1] ?? [];
+/* PARSE QUOTES */
+
+$dom2 = new DOMDocument();
+$dom2->loadHTML($htmlQuote);
+
+$blocks = $dom2->getElementsByTagName("blockquote");
+
+if($blocks->length > 0){
+
+$quotes = [];
+
+foreach($blocks as $b){
+$quotes[] = $dom2->saveHTML($b);
+}
 
 $index = date("z") % count($quotes);
 
-$quoteHariIni = $quotes[$index] ?? "";
+$quote = $quotes[$index];
+}
+
+header("Content-Type: application/json");
 
 echo json_encode([
 "renungan"=>$renungan,
-"quote"=>$quoteHariIni
+"quote"=>$quote
 ]);
