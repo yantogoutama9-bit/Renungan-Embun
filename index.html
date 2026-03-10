@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id">
+<html>
 <head>
 <meta charset="UTF-8">
 <title>Renungan Harian</title>
@@ -14,18 +14,34 @@
 <p id="tanggal"></p>
 
 <div class="card">
-<h2>Renungan Embun Pagi</h2>
+<h2>Renungan Oswald Chambers</h2>
 <div id="renungan">Memuat renungan...</div>
 </div>
 
 <div class="card">
-<h2>Quotes Hari Ini</h2>
+<h2>Quote Hari Ini</h2>
 <div id="quote">Memuat quote...</div>
 </div>
 
 </div>
 
-<script src="app.js"></script>
+<script>
+
+const today = new Date()
+
+document.getElementById("tanggal").innerText =
+today.toLocaleDateString("id-ID",{weekday:'long',year:'numeric',month:'long',day:'numeric'})
+
+fetch("api.php")
+.then(res=>res.json())
+.then(data=>{
+
+document.getElementById("renungan").innerHTML = data.renungan
+document.getElementById("quote").innerHTML = data.quote
+
+})
+
+</script>
 
 </body>
 </html>
