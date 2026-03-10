@@ -1,51 +1,766 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<title>Renungan Harian</title>
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Renungan Harian & Quotes Rohani</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            color: #eaeaea;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+        }
+
+        .bg-shapes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.03);
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .shape:nth-child(1) {
+            width: 300px;
+            height: 300px;
+            top: -150px;
+            right: -100px;
+            animation-delay: 0s;
+        }
+
+        .shape:nth-child(2) {
+            width: 200px;
+            height: 200px;
+            bottom: -100px;
+            left: -100px;
+            animation-delay: 5s;
+        }
+
+        .shape:nth-child(3) {
+            width: 150px;
+            height: 150px;
+            top: 50%;
+            left: 50%;
+            animation-delay: 10s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(30px, -30px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.9); }
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3rem;
+            font-weight: 600;
+            background: linear-gradient(135deg, #f5f5f5 0%, #d4af37 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+
+        .subtitle {
+            font-size: 0.9rem;
+            color: #a0a0a0;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            font-weight: 300;
+        }
+
+        .date-nav {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 40px;
+            animation: fadeIn 1s ease-out 0.3s both;
+        }
+
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-btn:hover {
+            background: rgba(212, 175, 55, 0.3);
+            border-color: #d4af37;
+            transform: scale(1.1);
+        }
+
+        .date-display {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px 30px;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3rem;
+            min-width: 250px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+
+        .auto-update-badge {
+            display: inline-block;
+            background: rgba(46, 204, 113, 0.2);
+            color: #2ecc71;
+            font-size: 0.7rem;
+            padding: 4px 10px;
+            border-radius: 12px;
+            margin-left: 10px;
+            border: 1px solid rgba(46, 204, 113, 0.3);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+            animation: fadeIn 1s ease-out 0.5s both;
+        }
+
+        .tab-btn {
+            padding: 12px 30px;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #a0a0a0;
+            cursor: pointer;
+            border-radius: 25px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, #d4af37 0%, #f4e5c2 100%);
+            color: #1a1a2e;
+            border-color: transparent;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+        }
+
+        .tab-btn:hover:not(.active) {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+        }
+
+        .content-wrapper {
+            position: relative;
+            min-height: 500px;
+        }
+
+        .content-card {
+            display: none;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .content-card.active {
+            display: block;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #d4af37, #f4e5c2, #d4af37);
+        }
+
+        .renungan-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .renungan-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            color: #d4af37;
+            margin-bottom: 10px;
+            font-style: italic;
+        }
+
+        .verse-ref {
+            font-size: 0.9rem;
+            color: #a0a0a0;
+            letter-spacing: 2px;
+        }
+
+        .intro-box {
+            background: rgba(212, 175, 55, 0.1);
+            border-left: 4px solid #d4af37;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 0 10px 10px 0;
+            font-style: italic;
+            color: #e0e0e0;
+            line-height: 1.8;
+        }
+
+        .renungan-content {
+            line-height: 2;
+            color: #d0d0d0;
+            text-align: justify;
+            font-size: 1.05rem;
+        }
+
+        .renungan-content p {
+            margin-bottom: 20px;
+            text-indent: 30px;
+        }
+
+        .highlight {
+            color: #f4e5c2;
+            font-weight: 500;
+        }
+
+        .quote-container {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .quote-icon {
+            font-size: 4rem;
+            color: #d4af37;
+            opacity: 0.3;
+            margin-bottom: 20px;
+            font-family: serif;
+            line-height: 1;
+        }
+
+        .quote-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.9rem;
+            line-height: 1.6;
+            color: #f5f5f5;
+            margin-bottom: 30px;
+            font-style: italic;
+            position: relative;
+            padding: 0 20px;
+        }
+
+        .quote-author {
+            font-size: 0.9rem;
+            color: #d4af37;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-weight: 600;
+        }
+
+        .quote-divider {
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #d4af37, transparent);
+            margin: 30px auto;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 60px;
+            color: #d4af37;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(212, 175, 55, 0.3);
+            border-top-color: #d4af37;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2rem; }
+            .card { padding: 25px; }
+            .quote-text { font-size: 1.4rem; }
+            .renungan-content { font-size: 1rem; }
+            .tabs { flex-direction: column; align-items: center; }
+            .tab-btn { width: 200px; }
+            .date-display { min-width: 200px; font-size: 1.1rem; }
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #d4af37;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #f4e5c2;
+        }
+
+        .footer-note {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 0.8rem;
+            color: #666;
+            font-style: italic;
+        }
+
+        .update-info {
+            text-align: center;
+            font-size: 0.75rem;
+            color: #555;
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        .today-indicator {
+            background: linear-gradient(135deg, #d4af37 0%, #f4e5c2 100%);
+            color: #1a1a2e;
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-left: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+    </style>
 </head>
-
 <body>
+    <div class="bg-shapes">
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
 
-<div class="container">
+    <div class="container">
+        <header>
+            <h1>Renungan & Quotes</h1>
+            <div class="subtitle">Perjalanan Rohani Harian</div>
+        </header>
 
-<h1>Renungan Harian</h1>
-<p id="tanggal"></p>
+        <div class="date-nav">
+            <button class="nav-btn" onclick="changeDate(-1)" title="Hari Sebelumnya">‹</button>
+            <div class="date-display">
+                <span id="currentDate">Memuat...</span>
+                <span id="todayBadge" class="today-indicator" style="display: none;">Hari Ini</span>
+            </div>
+            <button class="nav-btn" onclick="changeDate(1)" title="Hari Berikutnya">›</button>
+        </div>
 
-<div class="card">
-<h2>Renungan Embun Pagi</h2>
-<div id="renungan">Memuat renungan...</div>
-</div>
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('renungan')">Renungan Harian</button>
+            <button class="tab-btn" onclick="switchTab('quotes')">Quotes Hari Ini</button>
+        </div>
 
-<div class="card">
-<h2>Quote Hari Ini</h2>
-<div id="quote">Memuat quote...</div>
-</div>
+        <div class="content-wrapper">
+            <!-- Renungan Content -->
+            <div id="renungan" class="content-card active">
+                <div class="card">
+                    <div class="renungan-header">
+                        <div class="renungan-title" id="renunganTitle">Renungan Hari Ini</div>
+                        <div class="verse-ref" id="verseRef">Memuat...</div>
+                    </div>
+                    
+                    <div class="intro-box" id="introText">
+                        Memuat renungan untuk hari ini...
+                    </div>
 
-</div>
+                    <div class="renungan-content" id="renunganText">
+                        <p>Silakan tunggu sebentar...</p>
+                    </div>
+                </div>
+            </div>
 
-<script>
+            <!-- Quotes Content -->
+            <div id="quotes" class="content-card">
+                <div class="card">
+                    <div class="quote-container">
+                        <div class="quote-icon">"</div>
+                        <div class="quote-text" id="quoteText1">
+                            Memuat quotes untuk hari ini...
+                        </div>
+                        <div class="quote-divider"></div>
+                        <div class="quote-author">— Quotes Today</div>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 20px;">
+                    <div class="card" style="margin-bottom: 20px;">
+                        <div class="quote-container" style="padding: 30px 20px;">
+                            <div class="quote-icon" style="font-size: 2rem; margin-bottom: 15px;">"</div>
+                            <div class="quote-text" style="font-size: 1.3rem; margin-bottom: 20px;" id="quoteText2">
+                                Memuat quotes kedua...
+                            </div>
+                        </div>
+                    </div>
 
-const today = new Date()
+                    <div class="card">
+                        <div class="quote-container" style="padding: 30px 20px;">
+                            <div class="quote-icon" style="font-size: 2rem; margin-bottom: 15px;">"</div>
+                            <div class="quote-text" style="font-size: 1.3rem; margin-bottom: 20px;" id="quoteText3">
+                                Memuat quotes ketiga...
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-document.getElementById("tanggal").innerText =
-today.toLocaleDateString("id-ID",{weekday:'long',year:'numeric',month:'long',day:'numeric'})
+        <div class="update-info" id="updateInfo"></div>
+        <div class="footer-note">
+            Renungan Embun Pagi | By Ps. Yanto Goutama
+            <br>
+            <small>Sumber ROC dan GSKI</small>
+        </div>
+    </div>
 
-fetch("api.php")
-.then(res => res.json())
-.then(data => {
+    <script>
+        // Database Renungan (bisa diperluas)
+        const renunganDatabase = [
+            {
+                verse: "2 Timotius 4:2",
+                intro: "Salah satu kebenaran dalam renungan hari ini adalah Allah mampu membawa pekerja Kristen melampaui aspirasi dan gagasannya sendiri, dan membentuk dia untuk maksud tujuan-Nya.",
+                content: `<p>Kita bukan hanya diselamatkan hanya untuk menjadi alat bagi Allah, melainkan untuk menjadi Anak-anak-Nya. Dia tidak menjadikan kita menjadi sekadar petugas rohani, tetapi menjadi <span class="highlight">pembawa amanat rohani</span>, dan amanat tersebut harus menjadi bagian dari diri kita. Anak Allah sendiri merupakan amanat Allah sendiri — "Perkataan-perkataan yang Kukatakan kepadamu adalah roh dan hidup" (Yohanes 6:63).</p>
+                         <p>Sebagai murid-Nya, hidup kita harus menjadi teladan suci dan realitas dari amanat yang kita sampaikan. Memang hati seseorang yang belum diselamatkan dapat juga melayani karena penugasan menghendaki demikian, tetapi diperlukan hati yang remuk oleh keinsafan dosa, dibaptis oleh Roh Kudus dan ditaklukkan ke dalam kendali maksud tujuan Allah untuk menjadikan hidup seseorang sebagai teladan yang suci dari amanat Allah.</p>
+                         <p>Ada perbedaan antara memberikan kesaksian dan berkhotbah. Seorang pengkhotbah adalah seseorang yang telah menerima panggilan Allah dan dengan tekun memakai seluruh tenaganya untuk menyatakan kebenaran Allah. (Akan tetapi) Allah membawa kita melampaui aspirasi dan gagasan kita sendiri, dan membentuk dan menempa kita untuk maksud tujuan-Nya bagi kita, seperti yang dikerjakan-Nya dalam kehidupan para murid setelah Pentakosta.</p>
+                         <p>Maksud dari Pentakosta bukanlah untuk mengajarkan sesuatu kepada para murid, melainkan membuat mereka menjadi inkarnasi atau penjelmaan dari khotbah mereka sehingga mereka secara harfiah menjadi amanat Allah dalam rupa manusia "... kamu akan menjadi saksi-saksi-Ku ..." (Kisah Para Rasul 1:8).</p>
+                         <p class="highlight">Izinkanlah Allah mendapat kebebasan penuh dalam hidup Anda bila Anda berbicara. Sebelum amanat Allah dapat membebaskan orang lain, pertama-tama pembebasan-Nya harus menjadi nyata dalam diri Anda. Kumpulkan bahan Anda dengan cermat, dan kemudian izinkan Allah untuk "membakar kata-kata Anda" bagi kemuliaan-Nya.</p>`
+            },
+            {
+                verse: "Yohanes 15:5",
+                intro: "Yesus berkata: 'Akulah pokok anggur dan kamulah ranting-rantingnya.' Hubungan ini menggambarkan ketergantungan total kita pada Dia.",
+                content: `<p>Tidak ada satupun dari kita yang dapat berdiri sendiri. Kita sering kali mencoba untuk menghasilkan buah rohani dengan kekuatan kita sendiri, namun <span class="highlight">hanya Kristus yang dapat menghasilkan buah yang kekal</span>.</p>
+                         <p>Setiap usaha manusia untuk mencapai kesucian tanpa ketergantungan pada Pokok Anggur akan berakhir dengan kegagalan. Bukan dengan usaha keras kita, tetapi dengan tinggal di dalam Dia.</p>
+                         <p>Bapa penggodam memang perlu, namun tujuannya bukan untuk menyakiti, melainkan untuk membentuk. Setiap pemangkasan adalah bukti kasih-Nya yang tak terbatas.</p>
+                         <p>Ketika kau merasa lemah dan hampir putus asa, ingatlah bahwa justru di situlah kuasa Allah sempurna dalam kelemahanmu. Jangan berusaha keluar dari pengaruh Roh Kudus, biarkan Dia bekerja dalam hidupmu.</p>`
+            },
+            {
+                verse: "Roma 12:1",
+                intro: "Pengorbanan yang hidup, kudus, dan berkenan kepada Allah adalah dasar dari pelayanan yang sejati.",
+                content: `<p>Allah tidak menginginkan pengorbanan mati, melainkan <span class="highlight">pengorbanan yang hidup</span>. Ini berarti seluruh kehidupan kita menjadi persembahan yang terus-menerus.</p>
+                         <p>Banyak orang Kristen bersedia untuk mati sebagai martir, namun enggan untuk hidup sebagai persembahan. Padahal, hidup keseharian yang ditaklukkan kepada Allah jauh lebih sulit daripada kematian yang sesaat.</p>
+                         <p>Transformasi pikiran adalah bukti dari pengorbanan yang hidup. Ketika kita berhenti berpikir sesuai dengan pola dunia ini, maka kita akan mengenal kehendak Allah yang sempurna.</p>`
+            },
+            {
+                verse: "Matius 11:28",
+                intro: "Datanglah kepada-Ku, semua yang letih lesu dan berbeban berat, Aku akan memberi kelegaan kepadamu.",
+                content: `<p>Yesus tidak mengatakan "Datanglah kepada gereja" atau "Datanglah kepada agama", tetapi <span class="highlight">"Datanglah kepada-Ku"</span>. Hanya di dalam Dia kita menemukan kelegaan yang sejati.</p>
+                         <p>Kelelahan rohani lebih berbahaya daripada kelelahan fisik. Ketika kita mencoba melayani Tuhan dengan kekuatan sendiri, kita akan jatuh ke dalam keletihan yang mendalam.</p>
+                         <p>Istirahat yang Yesus tawarkan bukanlah ketidak-aktifan, melainkan bekerja bersama-Nya dengan ringan. Kuk yang Dia berikan adalah ringan karena Dia yang memikul beban bersama kita.</p>`
+            },
+            {
+                verse: "2 Korintus 5:17",
+                intro: "Jadi siapa yang ada di dalam Kristus, ia adalah ciptaan baru; yang lama sudah berlalu, sesungguhnya yang baru sudah datang.",
+                content: `<p>Perubahan dalam Kristus bukanlah sekadar perbaikan diri, melainkan <span class="highlight">ciptaan baru</span>. Ini adalah pekerjaan Allah yang ajaib dalam hidup kita.</p>
+                         <p>Kita sering mencoba memperbaiki diri sendiri dengan aturan dan disiplin, namun Allah menggantikan nature kita dengan nature-Nya sendiri. Ini adalah pekerjaan Roh Kudus.</p>
+                         <p>Jangan melihat ke belakang dengan penyesalan, juga jangan melihat ke depan dengan takut. Lihatlah kepada Kristus yang membuat segala sesuatu baru.</p>`
+            },
+            {
+                verse: "Filipi 4:13",
+                intro: "Segala perkara dapat kutanggung di dalam Dia yang memberi kekuatan kepadaku.",
+                content: `<p>Ayat ini bukanlah janji untuk melakukan segala sesuatu yang kita inginkan, melainkan <span class="highlight">kekuatan untuk melakukan kehendak Allah</span> dalam setiap keadaan.</p>
+                         <p>Paulus menulis ini bukan dalam kemewahan, melainkan dalam penjara. Kekuatan sejati bukanlah terbebas dari masalah, melainkan mampu bersukacita di tengah masalah.</p>
+                         <p>Ketika kita mengira sudah mencapai batas, itulah saat kuasa Allah mulai bekerja. Jangan berkata "Aku tidak sanggup", tetapi katakan "Dia yang ada di dalamku lebih besar".</p>`
+            },
+            {
+                verse: "Mazmur 23:1",
+                intro: "Tuhan adalah gembalaku, takkan kekurangan aku. Kebenaran fundamental yang harus kita pegang setiap hari.",
+                content: `<p>Dalam dunia yang penuh ketidakpastian, kita memiliki <span class="highlight">Gembal yang baik</span> yang selalu menyediakan kebutuhan kita. Bukan keinginan kita, tetapi kebutuhan kita.</p>
+                         <p>Domba tidak perlu khawatir tentang masa depan, karena gembala yang memikul tanggung jawab. Begitu juga kita, jika sungguh-sungguh mempercayai Tuhan.</p>
+                         <p>Lembah kelam yang kita lewati bukanlah tanda ketidakpedulian Allah, melainkan tempat di mana kita belajar mengenal tongkat dan gada-Nya yang menghibur.</p>`
+            }
+        ];
 
-document.getElementById("renungan").innerHTML = data.renungan
-document.getElementById("quote").innerHTML = data.quote
+        // Database Quotes
+        const quotesDatabase = [
+            [
+                "Tuhan itu terlalu mulia untuk dibandingkan dengan apa pun dan siapa pun. Jadi seharusnya kita berani untuk melepaskan apa pun…",
+                "Mukjizat dilakukan dengan maksud supaya mengenal pribadi Sang Pembuat mukjizat, bukan untuk mengagumi mukjizat itu sendiri",
+                "Kristen militan hendak menunjukkan kelompok orang percaya kepada Tuhan Yesus yang memiliki karakteristik seperti militer, yaitu bersemangat tinggi, penuh gairah…"
+            ],
+            [
+                "Tantangan justru menjadi bukti bahwa pelayanan pekerjaan Tuhan berhadapan dengan kuasa yang tidak menghendaki perkembangannya.",
+                "Iman bukanlah penghilang rasa takut, melainkan kekuatan untuk melangkah meski takut.",
+                "Doa bukanlah mengubah kehendak Allah, melainkan menyesuaikan hati kita dengan kehendak-Nya."
+            ],
+            [
+                "Kasih sejati tidak pernah memaksa, ia selalu memberi kebebasan untuk memilih.",
+                "Kesucian bukanlah perfeksionisme, melainkan pemisahan diri untuk tujuan yang kudus.",
+                "Penderitaan adalah sekolah rohani di mana Allah mengajar hati kita untuk mendengar suara-Nya dengan lebih jelas."
+            ],
+            [
+                "Kerendahan hati adalah tanda orang yang mengenal Allah dengan benar.",
+                "Kesabaran bukanlah kemalasan, melainkan kekuatan menahan diri dalam pengendalian Roh Kudus.",
+                "Sukacita sejati tidak tergantung pada keadaan, melainkan pada hubungan dengan Sang Pencipta."
+            ],
+            [
+                "Pengampunan adalah kunci yang membuka pintu kemerdekaan rohani.",
+                "Ketika kita merasa lemah, itulah saat kuasa Allah sempurna dalam kelemahan kita.",
+                "Setiap pagi adalah kesempatan baru untuk mengalami kasih setia-Nya."
+            ],
+            [
+                "Kebenaran tanpa kasih adalah kekejaman, kasih tanpa kebenaran adalah kompromi.",
+                "Allah tidak mencari kemampuan kita, melainkan ketersediaan hati kita.",
+                "Pelayanan yang berkenan adalah pelayanan yang dilakukan dengan hati yang utuh kepada Tuhan."
+            ],
+            [
+                "Jangan menunggu merasa cukup rohani untuk melayani, mulailah melayani dan Anda akan tumbuh rohani.",
+                "Kemenangan rohani bukanlah penghindaran masalah, melainkan keteguhan iman di tengah masalah.",
+                "Hidup Kristen yang sehat ditandai dengan buah Roh yang terus bertumbuh."
+            ]
+        ];
 
-})
-.catch(err=>{
-document.getElementById("renungan").innerText="Gagal memuat renungan"
-document.getElementById("quote").innerText="Gagal memuat quote"
-})
+        let currentDate = new Date();
+        let currentOffset = 0; // 0 = hari ini, -1 = kemarin, 1 = besok
 
-</script>
+        function getDayIndex(date) {
+            // Menggunakan tanggal sebagai index untuk rotasi konten
+            const start = new Date(2026, 2, 10); // 10 Maret 2026 sebagai start
+            const diffTime = date - start;
+            const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+            return ((diffDays % 7) + 7) % 7; // Rotasi mingguan (0-6)
+        }
 
+        function formatDate(date) {
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            return date.toLocaleDateString('id-ID', options);
+        }
+
+        function isToday(date) {
+            const today = new Date();
+            return date.toDateString() === today.toDateString();
+        }
+
+        function updateDisplay() {
+            const targetDate = new Date(currentDate);
+            targetDate.setDate(targetDate.getDate() + currentOffset);
+            
+            // Update tanggal display
+            document.getElementById('currentDate').textContent = formatDate(targetDate);
+            
+            // Show/hide badge "Hari Ini"
+            const badge = document.getElementById('todayBadge');
+            if (currentOffset === 0) {
+                badge.style.display = 'inline-block';
+                badge.textContent = 'Hari Ini';
+            } else if (currentOffset === -1) {
+                badge.style.display = 'inline-block';
+                badge.textContent = 'Kemarin';
+            } else if (currentOffset === 1) {
+                badge.style.display = 'inline-block';
+                badge.textContent = 'Besok';
+            } else {
+                badge.style.display = 'none';
+            }
+
+            // Get content index
+            const index = getDayIndex(targetDate);
+            
+            // Update Renungan
+            const renungan = renunganDatabase[index];
+            document.getElementById('verseRef').textContent = renungan.verse;
+            document.getElementById('introText').textContent = renungan.intro;
+            document.getElementById('renunganText').innerHTML = renungan.content;
+
+            // Update Quotes
+            const quotes = quotesDatabase[index];
+            document.getElementById('quoteText1').textContent = quotes[0];
+            document.getElementById('quoteText2').textContent = quotes[1];
+            document.getElementById('quoteText3').textContent = quotes[2];
+
+            // Update info
+            const now = new Date();
+            document.getElementById('updateInfo').textContent = 
+                `Konten untuk ${formatDate(targetDate)} • Diperbarui: ${now.toLocaleTimeString('id-ID')}`;
+
+            // Simpan ke localStorage untuk tracking
+            saveToCache(targetDate, renungan, quotes);
+        }
+
+        function changeDate(direction) {
+            currentOffset += direction;
+            
+            // Animasi transisi
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                card.style.animation = 'none';
+                setTimeout(() => {
+                    card.style.animation = 'fadeInUp 0.6s ease-out';
+                }, 10);
+            });
+
+            updateDisplay();
+        }
+
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            document.querySelectorAll('.content-card').forEach(card => {
+                card.classList.remove('active');
+            });
+            document.getElementById(tabName).classList.add('active');
+        }
+
+        // Cache system
+        function saveToCache(date, renungan, quotes) {
+            const cacheKey = 'content_' + date.toISOString().split('T')[0];
+            const cacheData = {
+                date: date.toISOString(),
+                renungan: renungan,
+                quotes: quotes,
+                savedAt: new Date().toISOString()
+            };
+            localStorage.setItem(cacheKey, JSON.stringify(cacheData));
+        }
+
+        function loadFromCache(date) {
+            const cacheKey = 'content_' + date.toISOString().split('T')[0];
+            const cached = localStorage.getItem(cacheKey);
+            return cached ? JSON.parse(cached) : null;
+        }
+
+        // Auto-update system
+        function checkForNewDay() {
+            const now = new Date();
+            const lastCheck = localStorage.getItem('lastCheck');
+            
+            if (lastCheck) {
+                const lastDate = new Date(lastCheck);
+                if (lastDate.getDate() !== now.getDate() || 
+                    lastDate.getMonth() !== now.getMonth() || 
+                    lastDate.getFullYear() !== now.getFullYear()) {
+                    // Hari baru! Reset ke hari ini
+                    currentOffset = 0;
+                    currentDate = new Date();
+                    updateDisplay();
+                    console.log('Auto-update: Hari baru terdeteksi, konten diperbarui');
+                }
+            }
+            
+            localStorage.setItem('lastCheck', now.toISOString());
+        }
+
+        // Check setiap menit untuk perubahan hari
+        setInterval(checkForNewDay, 60000);
+
+        // Check saat tab menjadi visible lagi
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) {
+                checkForNewDay();
+            }
+        });
+
+        // Init
+        checkForNewDay();
+        updateDisplay();
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowLeft') changeDate(-1);
+            if (e.key === 'ArrowRight') changeDate(1);
+        });
+    </script>
 </body>
 </html>
