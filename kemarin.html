@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Renungan Harian Embun Pagi - Kemarin</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #1a237e 0%, #3949ab 50%, #5c6bc0 100%);
+            color: #e8eaf6;
+            line-height: 1.8;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Navigation Menu */
+        .nav-menu {
+            background: rgba(13, 22, 66, 0.85);
+            backdrop-filter: blur(10px);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            border-bottom: 1px solid rgba(255,215,0,0.2);
+            position: sticky;
+            top: 0;
+            z-index: 999;
+        }
+        
+        .nav-link {
+            color: #e8eaf6;
+            text-decoration: none;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            padding: 8px 20px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+            cursor: pointer;
+            background: transparent;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .nav-link:hover {
+            background: rgba(255,215,0,0.1);
+            border-color: rgba(255,215,0,0.4);
+            color: #ffd700;
+        }
+        
+        .nav-link.active {
+            background: rgba(255,215,0,0.2);
+            border-color: #ffd700;
+            color: #ffd700;
+            font-weight: 500;
+        }
+        
+        /* Header */
+        header {
+            text-align: center;
+            padding: 60px 20px 40px;
+            background: rgba(255,255,255,0.08);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.2rem;
+            font-weight: 600;
+            letter-spacing: 3px;
+            color: #ffd700;
+            margin-bottom: 8px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .tagline {
+            font-size: 0.85rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: #c5b358;
+            font-weight: 300;
+        }
+        
+        .date-display {
+            margin-top: 20px;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.1rem;
+            color: #b0bec5;
+            font-style: italic;
+        }
+        
+        /* Main Content */
+        main {
+            flex: 1;
+            max-width: 800px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 40px 30px;
+        }
+        
+        /* Page Sections */
+        .page-section {
+            display: none;
+            animation: fadeIn 0.6s ease-out;
+        }
+        
+        .page-section.active {
+            display: block;
+        }
+        
+        /* Home Page Styles */
+        .home-intro {
+            text-align: center;
+            padding: 40px 20px;
+        }
+        
+        .home-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            color: #ffd700;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        
+        .home-description {
+            font-size: 1.1rem;
+            line-height: 2;
+            color: #e8eaf6;
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .home-verse {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3rem;
+            font-style: italic;
+            color: #c5b358;
+            border-left: 3px solid #ffd700;
+            padding-left: 20px;
+            margin: 30px auto;
+            max-width: 500px;
+            text-align: left;
+        }
+        
+        /* YouTube Section */
+        .youtube-section {
+            background: rgba(255,255,255,0.95);
+            padding: 40px;
+            border-radius: 12px;
+            margin-top: 40px;
+            color: #1a237e;
+            text-align: center;
+        }
+        
+        .youtube-link-box {
+            background: #e8eaf6;
+            padding: 30px;
+            border-radius: 8px;
+            border-left: 4px solid #ffd700;
+            margin-top: 20px;
+        }
+
+        .youtube-thumbnail {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            display: block;
+        }
+        
+        .youtube-link {
+            display: inline-block;
+            color: #b8860b;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: color 0.3s ease;
+            word-break: break-all;
+        }
+        
+        .youtube-link:hover {
+            color: #ffd700;
+        }
+        
+        /* Renungan Section */
+        .renungan-section {
+            background: rgba(255,255,255,0.95);
+            padding: 50px;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+            color: #1a237e;
+        }
+        
+        .renungan-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #ffd700, #ffed4e, #ffd700);
+        }
+        
+        .section-label {
+            font-size: 0.75rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #1a237e;
+            margin-bottom: 30px;
+            font-weight: 600;
+            opacity: 0.8;
+        }
+        
+        .verse-ref {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3rem;
+            color: #0d1642;
+            margin-bottom: 25px;
+            font-style: italic;
+            border-left: 3px solid #ffd700;
+            padding-left: 20px;
+            font-weight: 600;
+        }
+        
+        .verse-ref strong {
+            color: #b8860b;
+        }
+        
+        .renungan-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.25rem;
+            line-height: 2;
+            color: #283593;
+            text-align: justify;
+            margin-bottom: 30px;
+        }
+        
+        .renungan-text p {
+            margin-bottom: 1.2em;
+        }
+        
+        .renungan-text .logo {
+            color: #1a237e;
+            text-shadow: none;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            font-family: 'Cormorant Garamond', serif;
+        }
+        
+        .prayer {
+            background: #e8eaf6;
+            padding: 25px;
+            border-radius: 8px;
+            font-style: italic;
+            color: #1a237e;
+            border-left: 4px solid #ffd700;
+            margin-top: 30px;
+        }
+        
+        .prayer-label {
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #1a237e;
+            margin-bottom: 10px;
+            font-style: normal;
+            font-weight: 600;
+            opacity: 0.7;
+        }
+        
+        /* Quote Section */
+        .quote-section {
+            text-align: center;
+            padding: 80px 40px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .quote-icon {
+            font-size: 4rem;
+            color: #ffd700;
+            line-height: 1;
+            margin-bottom: 30px;
+            opacity: 0.8;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .quote-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            font-style: italic;
+            color: #fff8e1;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            position: relative;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .quote-author {
+            font-size: 1rem;
+            color: #c5b358;
+            letter-spacing: 1px;
+            font-weight: 400;
+        }
+        
+        .divider {
+            width: 40px;
+            height: 1px;
+            background: #ffd700;
+            margin: 30px auto;
+            opacity: 0.5;
+        }
+        
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            background: rgba(13, 22, 66, 0.6);
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.8rem;
+            color: #9fa8da;
+            letter-spacing: 1px;
+        }
+        
+        .copyright {
+            margin-bottom: 10px;
+            color: #ffd700;
+        }
+        
+        .footer-verse {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            color: #b0bec5;
+            font-size: 0.9rem;
+            margin-top: 15px;
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-menu {
+                gap: 10px;
+                padding: 12px 10px;
+            }
+            
+            .nav-link {
+                font-size: 0.8rem;
+                padding: 6px 15px;
+            }
+            
+            .renungan-section, .youtube-section {
+                padding: 30px;
+            }
+            
+            .renungan-text {
+                font-size: 1.1rem;
+            }
+            
+            .quote-text {
+                font-size: 1.3rem;
+            }
+            
+            .logo {
+                font-size: 1.8rem;
+            }
+        }
+        
+        /* Print styles */
+        @media print {
+            .nav-menu {
+                display: none !important;
+            }
+            
+            body {
+                background: #fff !important;
+                color: #000 !important;
+            }
+            
+            .renungan-section, .youtube-section {
+                background: #fff !important;
+                color: #000 !important;
+                box-shadow: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Menu - EDIT BARIS 32-35 -->
+    <nav class="nav-menu">
+        <a href="kemarin.html" class="nav-link active">Kemarin</a>
+        <a href="index.html" class="nav-link">Hari Ini</a>
+        <a href="besok.html" class="nav-link">Besok</a>
+        <button class="nav-link" onclick="showPage('quotes')">Quotes</button>
+    </nav>
+
+    <header>
+        <div class="logo">EMBUN PAGI</div>
+        <div class="tagline">Renungan Harian</div>
+        <!-- EDIT BARIS 36-38: Update tanggal kemarin -->
+        <div class="date-display" id="currentDate"></div>
+    </header>
+
+    <main>
+        <!-- HALAMAN BERANDA -->
+        <section class="page-section active" id="home">
+            <div class="home-intro">
+                <h1 class="home-title">Renungan Kemarin</h1>
+                <p class="home-description">
+                    Renungan kemarin yang dapat Anda baca kembali untuk menguatkan iman dan memperdalam pemahaman firman Tuhan.
+                </p>
+                <div class="home-verse">
+                    "Ingatlah akan segala perbuatan-Nya yang ajaib yang telah dilakukan-Nya."
+                    <br>— 1 Tawarikh 16:12
+                </div>
+                <p class="home-description">
+                    Mari kembali merenungkan kebenaran ilahi dari renungan kemarin.
+                </p>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- YOUTUBE LINK SECTION - EDIT BARIS 261 -->
+            <div class="youtube-section">
+                <div class="youtube-link-box">
+                    <!-- GANTI ID VIDEO: qPG45bvea50 -->
+                    <img src="https://img.youtube.com/vi/qPG45bvea50/maxresdefault.jpg" 
+                         alt="Thumbnail Video" 
+                         class="youtube-thumbnail"
+                         onerror="this.src='https://img.youtube.com/vi/qPG45bvea50/hqdefault.jpg'">
+                    <a href="https://www.youtube.com/watch?v=qPG45bvea50" class="youtube-link" target="_blank">
+                        Tonton Video di YouTube →
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- HALAMAN RENUNGAN - EDIT BARIS 276-308 -->
+        <section class="page-section" id="renungan">
+            <div class="renungan-section">
+                <div class="section-label">Renungan Kemarin</div>
+                
+                <!-- EDIT BARIS 276-279: Ayat dasar kemarin -->
+                <div class="verse-ref">
+                    "Sebab itu juga kami berusaha, ... supaya kami berkenan kepada-Nya."
+                    <br><strong>2 Korintus 5:9</strong>
+                </div>
+                
+                <!-- EDIT BARIS 283-302: Isi Renungan kemarin -->
+                <div class="renungan-text">
+                    <!-- EDIT BARIS 283: Judul kemarin -->
+                    <div class="logo">Sasaran Utama Seorang Hamba</div>
+                    
+                    <!-- EDIT BARIS 285-302: Paragraf renungan kemarin -->
+                    <p>
+                        Perkataan Paulus, "Sebab itu juga kami berusaha", berarti dibutuhkan suatu keputusan dan usaha secara sadar untuk tetap mempertahankan sasaran utama di depan kita. Hal itu berarti kita menempatkannya sebagai prioritas tertinggi dari tahun ke tahun; dalam hal mana prioritas pertama kita bukan memenangkan jiwa, mendirikan gereja, atau mengadakan kebaktian kebangunan rohani, tetapi hanya berusaha "agar berkenan kepada-Nya".
+                    </p>
+                    <p>
+                        Bukan karena tidak ada atau kurangnya pengalaman rohani yang membawa kita pada kegagalan, melainkan karena kurangnya usaha untuk memusatkan perhatian kita pada sasaran yang benar. Paling sedikit sekali seminggu ujilah diri Anda di hadapan Allah untuk memastikan apakah hidup Anda sudah memenuhi tolok ukur yang telah ditetapkan-Nya untuk Anda. Paulus adalah bagaikan seorang musisi yang tidak memedulikan pendapat penonton, asalkan dia mendapat perkenanan Dirigennya.
+                    </p>
+                    <p>
+                        Menoleransi/membiarkan sikap keliru terhadap orang lain menyebabkan Anda mengikuti roh iblis, betapa pun kudusnya Anda. Sebuah penilaian duniawi tentang orang lain hanya akan memenuhi tujuan neraka di dalam diri Anda. Bawalah segera ke dalam terang dan akuilah, "Ya Tuhan, aku telah bersalah dalam hal itu".
+                    </p>
+                    <p>
+                        Sasaran apa pun yang mengalihkan kita sedikit saja dari sasaran utama, yaitu "layak di hadapan Allah" (2 Timotius 2:15) mungkin akan mengakibatkan kita menolak melayani Dia lebih lanjut. Bila Anda mengenal arah sasaran, Anda akan memahami perlunya terus "mata tertuju kepada Yesus" (Ibrani 12:2). Paulus membicarakan pentingnya mengendalikan tubuhnya sehingga tidak akan membawanya ke arah yang keliru. Dia berkata, "Aku melatih tubuhku dan menguasainya, supaya ... jangan aku sendiri ditolak" (1 Korintus 9:27). Saya harus belajar mengaitkan segala sesuatu dengan sasaran utama, dengan memeliharanya tanpa interupsi atau gangguan. Kepatutan atau kelayakan saya bagi Allah di muka umum diukur oleh bagaimana saya sesungguhnya dalam hidup pribadi. Apakah sasaran utama saya dalam kehidupan adalah untuk berkenan kepada-Nya dan diterima oleh-Nya, ataukah kurang dari itu, betapa pun muluk kedengarannya?
+                    </p>
+                    <p>
+                        Ayat Selengkapnya 2 Korintus 5:9: "Sebab itu juga kami berusaha, baik kami diam di dalam tubuh ini, maupun kami diam di luarnya, supaya kami berkenan kepada-Nya."
+                    </p>
+                </div>
+                
+                <!-- EDIT BARIS 308: Doa kemarin -->
+                <div class="prayer">
+                    <div class="prayer-label">Doa</div>
+                    <div>
+                        "Tuhan, ajar aku untuk selalu ingat bahwa yang terutama dalam hidupku bukanlah banyaknya kegiatan atau pelayanan yang kulakukan, tetapi apakah hidupku berkenan di hadapan-Mu. Jagalah hatiku supaya tetap tulus, tidak mencari pujian manusia, melainkan sungguh-sungguh menyenangkan hati-Mu. Bentuklah hidupku agar layak dipakai oleh-Mu, sehingga setiap pelayanan yang kulakukan lahir dari hati yang benar di hadapan-Mu. Amin."
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- HALAMAN QUOTES - EDIT BARIS 324-327 -->
+        <section class="page-section" id="quotes">
+            <div class="quote-section">
+                <div class="quote-icon">"</div>
+                
+                <!-- EDIT BARIS 324: Quote kemarin -->
+                <div class="quote-text">
+                                        "Keberhasilan seorang hamba Tuhan bukan diukur dari ramainya pelayanan, tetapi dari kesetiaannya hidup di hadapan Tuhan."
+                </div>
+                
+                <!-- EDIT BARIS 327: Sumber Quote kemarin -->
+                <div class="quote-author">
+                    — Billy Graham
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="copyright">© 2026 by Ps. Yanto Goutama</div>
+        <div>Renungan Harian Embun Pagi | Sumber: My Utmost for His Highest</div>
+        <div class="footer-verse">"Sebab Aku ini mengetahui rancangan-rancangan apa yang ada pada-Ku mengenai kamu, demikianlah firman TUHAN, yaitu rancangan damai sejahtera dan bukan rancangan kecelakaan, untuk memberikan kepadamu hari depan yang penuh harapan." — Yeremia 29:11</div>
+    </footer>
+
+    <script>
+        // Fungsi untuk menampilkan halaman
+        function showPage(pageName) {
+            // Sembunyikan semua halaman
+            const pages = document.querySelectorAll('.page-section');
+            pages.forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Tampilkan halaman yang dipilih
+            document.getElementById(pageName).classList.add('active');
+            
+            // Update active state pada menu
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach((link, index) => {
+                link.classList.remove('active');
+                if (pageName === 'home' && index === 0) link.classList.add('active');
+                if (pageName === 'quotes' && index === 3) link.classList.add('active');
+            });
+            
+            // Scroll ke atas
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        // Set tanggal kemarin
+        function setYesterdayDate() {
+            const now = new Date();
+            now.setDate(now.getDate() - 1);
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('currentDate').textContent = now.toLocaleDateString('id-ID', options);
+        }
+        
+        // Inisialisasi
+        document.addEventListener('DOMContentLoaded', function() {
+            setYesterdayDate();
+        });
+    </script>
+</body>
+</html>
